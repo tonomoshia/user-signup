@@ -34,5 +34,5 @@ def email_sign_up():
     if 
 
 
-
-
+if __name__ == "__main__":
+    app.run()

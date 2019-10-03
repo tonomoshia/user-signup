@@ -52,29 +52,21 @@ def validateInputs():
             verify_error = "Passwords do not match"
             verify = ''
 
-    if int(len(email)) > 0:
-        if "@" not in email:
-            email_error = "That's not a valid email"
-            email = ''
-        elif "." not in email:
-            email_error = "That's not a valid email"
-            email = ''
-        elif "" in email:
-            email_error = "That's not a valid email"
-            email = ''
-        else:
-            if int(len(email)) < 3 or int(len(email)) > 20:
-                email_error = "That's not a valid email"
-                email = ''
+    if email != "" and len(email) < 3 or len (email) > 20:
+        email_error = "That's not a valid email"
+        email = ''
+    elif email !="" and ("." not in email or "@" not in email):
+        email_error = "That's not a valid email"
+        email = ''
 
     if not username_error and not verify_error and not password_error and not email_error:
         return redirect('/welcome?username={0}'.format(username))
     else:
         return render_template('index.html', username=username, password=password, verify=verify, email=email, username_error=username_error, password_error=password_error, verify_error=verify_error,  email_error=email_error)
 
-@app.route('/welcome', methods=['GET', 'POST'])
+@app.route('/welcome')
 def welcome():
-    username = request.form.get('username')
+    username = request.args.get('username')
     return render_template('welcome.html', username=username)
 
 
